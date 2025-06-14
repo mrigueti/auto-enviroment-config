@@ -134,13 +134,10 @@ function Install-Program {
 
     Write-Log "Instalando: $DisplayName" -Color Cyan
 
-    # Tentar WinGet primeiro
     if ($WinGetId -and (Install-WithWinGet -PackageName $DisplayName -WinGetId $WinGetId)) {
         return
     }
-
-    # Se WinGet falhou, tentar Chocolatey
-    if ($ChocoName -and (Install-WithChocolatey -PackageName $DisplayName -ChocoName $ChocoName)) {
+    elseif ($ChocoName -and (Install-WithChocolatey -PackageName $DisplayName -ChocoName $ChocoName)) {
         return
     }
 
@@ -173,7 +170,7 @@ Write-Log "Etapa 2: Instalando programas essenciais" -Color Magenta
 
 # Lista de programas simplificada (removido Scoop)
 $Programs = @(
-# Navegadores
+    # Navegadores
     @{
         DisplayName = "Google Chrome"
         WinGetId    = "Google.Chrome"
